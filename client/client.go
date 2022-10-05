@@ -4,9 +4,11 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"time"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"github.com/Grumlebob/grpcPhysicalTime/protos"
 )
@@ -30,13 +32,19 @@ func main() {
 }
 
 func timeSync(c protos.ChatServiceClient) {
-	message := protos.ClientRequest{Text: "Client sent first handshake, with Syn flag True and Seq 0", Ack: 0, Seq: 0}
-	fmt.Println(message.Text)
+	t := time.Now()
+	time := timestamppb.New(t)
+
+	clientRequest := protos.ClientRequest{
+		Text:      "Client sent first handshake, with Syn flag True and Seq 0",
+		Timestamp: time,
+	}
+	fmt.Println(clientRequest.Timestamp)
 
 	//First handshake
-	firstHandshake, err := c.GetTime(context.Background(), &message)
+	firstHandshake, err := c.GetTime(context.Background(), &clientRequest)
 	if err != nil {
-		log.Fatalf("Error when calling GetHeader(Message): %s", err)
+		log.Fatalf("Error when calling GetTime : %s", err)
 	}
 	fmt.Println(firstHandshake)
 
