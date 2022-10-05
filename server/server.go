@@ -10,6 +10,7 @@ import (
 	"github.com/Grumlebob/grpcPhysicalTime/protos"
 
 	"google.golang.org/grpc"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 type Server struct {
@@ -17,13 +18,15 @@ type Server struct {
 }
 
 func (s *Server) GetTime(ctx context.Context, clientMessage *protos.ClientRequest) (*protos.ServerResponse, error) {
-	var serverTime = time.Now().String()
+	t := time.Now()
+	time2 := timestamppb.New(t)
+	fmt.Println(time2)
 	var response = &protos.ServerResponse{
-		Text: serverTime,
+		Timestamp: time2,
 	}
-
-	fmt.Println("Client message: ", clientMessage)
-
+	t3 := time.Now()
+	time3 := timestamppb.New(t3)
+	fmt.Println(time3)
 	return response, nil
 }
 

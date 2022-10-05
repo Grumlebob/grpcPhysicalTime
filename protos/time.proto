@@ -11,11 +11,9 @@ service ChatService {
 }
 
 message ClientRequest {
-    string Text = 1;
-    google.protobuf.Timestamp timestamp = 2;
+    google.protobuf.Timestamp timestamp = 1;
 }
 
 message ServerResponse {
-    string Text = 1;
-    google.protobuf.Timestamp timestamp = 2;
+    google.protobuf.Timestamp timestamp = 1;
 }
