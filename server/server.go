@@ -21,6 +21,7 @@ func (s *Server) GetTime(ctx context.Context, clientMessage *protos.ClientReques
 	t := time.Now()
 	time2 := timestamppb.New(t)
 	fmt.Println("T2:", time2)
+	fmt.Println("Server current time:", time.Now())
 	var response = &protos.ServerResponse{
 		TimestampRecieved: time2,
 		TimestampSent:     timestamppb.New(time.Now()),
