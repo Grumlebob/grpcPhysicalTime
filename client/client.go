@@ -33,6 +33,7 @@ func main() {
 
 func timeSync(c protos.ChatServiceClient) {
 	time1 := timestamppb.New(time.Now())
+	fmt.Println("T1:", time1.AsTime())
 	fmt.Println("T1:", time1)
 	clientRequest := protos.ClientRequest{
 		Timestamp: time1,
