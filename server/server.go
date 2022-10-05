@@ -16,21 +16,15 @@ type Server struct {
 	protos.ChatServiceServer
 }
 
-func (s *Server) GetTime(ctx context.Context, message *protos.Message) (*protos.Message, error) {
-	var msgServer = message
-	//var serverTime = time.Now()
-
-	//If recieving first handshake
-	if (message.Seq == 0) && (message.Ack == 0) {
-		fmt.Println("Server recieved first handshake, with Syn flag True and Seq 0")
-		msgServer = &protos.Message{Text: "Second handshake  sent from Server, with Syn flag True and Ack 1", Seq: message.Seq, Ack: message.Seq + 1}
-		fmt.Printf("Server sending second handshake with Ack: %d \n", msgServer.Ack)
-	} else {
-		fmt.Printf("Server acknowledged it got %d and processed it. \n", message.Seq)
-		msgServer = &protos.Message{Seq: message.Seq, Ack: message.Seq + 1}
-		fmt.Printf("Server expect next to be Seq %d \n", msgServer.Ack)
+func (s *Server) GetTime(ctx context.Context, clientMessage *protos.ClientRequest) (*protos.ServerResponse, error) {
+	var serverTime = time.Now().String()
+	var response = &protos.ServerResponse{
+		Text: serverTime,
 	}
-	return msgServer, nil
+
+	fmt.Println("Client message: ", clientMessage)
+
+	return response, nil
 }
 
 func main() {

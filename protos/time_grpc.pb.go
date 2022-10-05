@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ChatServiceClient interface {
-	GetHeader(ctx context.Context, in *Message, opts ...grpc.CallOption) (*Message, error)
+	GetTime(ctx context.Context, in *ClientRequest, opts ...grpc.CallOption) (*ServerResponse, error)
 }
 
 type chatServiceClient struct {
@@ -33,9 +33,9 @@ func NewChatServiceClient(cc grpc.ClientConnInterface) ChatServiceClient {
 	return &chatServiceClient{cc}
 }
 
-func (c *chatServiceClient) GetHeader(ctx context.Context, in *Message, opts ...grpc.CallOption) (*Message, error) {
-	out := new(Message)
-	err := c.cc.Invoke(ctx, "/protos.ChatService/GetHeader", in, out, opts...)
+func (c *chatServiceClient) GetTime(ctx context.Context, in *ClientRequest, opts ...grpc.CallOption) (*ServerResponse, error) {
+	out := new(ServerResponse)
+	err := c.cc.Invoke(ctx, "/protos.ChatService/GetTime", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (c *chatServiceClient) GetHeader(ctx context.Context, in *Message, opts ...
 // All implementations must embed UnimplementedChatServiceServer
 // for forward compatibility
 type ChatServiceServer interface {
-	GetHeader(context.Context, *Message) (*Message, error)
+	GetTime(context.Context, *ClientRequest) (*ServerResponse, error)
 	mustEmbedUnimplementedChatServiceServer()
 }
 
@@ -54,8 +54,8 @@ type ChatServiceServer interface {
 type UnimplementedChatServiceServer struct {
 }
 
-func (UnimplementedChatServiceServer) GetHeader(context.Context, *Message) (*Message, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetHeader not implemented")
+func (UnimplementedChatServiceServer) GetTime(context.Context, *ClientRequest) (*ServerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTime not implemented")
 }
 func (UnimplementedChatServiceServer) mustEmbedUnimplementedChatServiceServer() {}
 
@@ -70,20 +70,20 @@ func RegisterChatServiceServer(s grpc.ServiceRegistrar, srv ChatServiceServer) {
 	s.RegisterService(&ChatService_ServiceDesc, srv)
 }
 
-func _ChatService_GetHeader_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Message)
+func _ChatService_GetTime_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClientRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).GetHeader(ctx, in)
+		return srv.(ChatServiceServer).GetTime(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/protos.ChatService/GetHeader",
+		FullMethod: "/protos.ChatService/GetTime",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).GetHeader(ctx, req.(*Message))
+		return srv.(ChatServiceServer).GetTime(ctx, req.(*ClientRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -96,8 +96,8 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ChatServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetHeader",
-			Handler:    _ChatService_GetHeader_Handler,
+			MethodName: "GetTime",
+			Handler:    _ChatService_GetTime_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

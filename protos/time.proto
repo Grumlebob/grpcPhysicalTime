@@ -10,12 +10,8 @@ service ChatService {
 
 message ClientRequest {
     string Text = 1;
-    int32 Ack = 2;
-    int32 Seq = 3;
 }
 
 message ServerResponse {
     string Text = 1;
-    int32 Ack = 2;
-    int32 Seq = 3;
 }
