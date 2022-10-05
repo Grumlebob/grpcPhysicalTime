@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"time"
 
 	"github.com/Grumlebob/grpcPhysicalTime/protos"
 
@@ -15,8 +16,10 @@ type Server struct {
 	protos.ChatServiceServer
 }
 
-func (s *Server) GetHeader(ctx context.Context, message *protos.Message) (*protos.Message, error) {
+func (s *Server) GetTime(ctx context.Context, message *protos.Message) (*protos.Message, error) {
 	var msgServer = message
+	//var serverTime = time.Now()
+
 	//If recieving first handshake
 	if (message.Seq == 0) && (message.Ack == 0) {
 		fmt.Println("Server recieved first handshake, with Syn flag True and Seq 0")

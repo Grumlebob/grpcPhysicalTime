@@ -5,10 +5,16 @@ option go_package = "https://github.com/Grumlebob/grpcPhysicalTime/tree/master/p
 
 
 service ChatService {
-    rpc GetHeader (Message) returns (Message) {}
+    rpc GetTime (ClientRequest) returns (ServerResponse) {}
 }
 
-message Message {
+message ClientRequest {
+    string Text = 1;
+    int32 Ack = 2;
+    int32 Seq = 3;
+}
+
+message ServerResponse {
     string Text = 1;
     int32 Ack = 2;
     int32 Seq = 3;
