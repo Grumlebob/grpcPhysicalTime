@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package protos;
-option go_package = "https://github.com/Grumlebob/GoLangAssignment2HardgRPC/tree/master/protos";
+option go_package = "https://github.com/Grumlebob/grpcPhysicalTime/tree/master/protos";
 
 
 service ChatService {

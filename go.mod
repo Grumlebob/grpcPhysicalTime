@@ -1,4 +1,4 @@
-module github.com/Grumlebob/GoLangAssignment2HardgRPC
+module github.com/Grumlebob/grpcPhysicalTime
 
 go 1.19
 

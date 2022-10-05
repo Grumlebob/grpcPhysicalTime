@@ -6,7 +6,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/Grumlebob/GoLangAssignment2HardgRPC/protos"
+	"github.com/Grumlebob/grpcPhysicalTime/protos"
 
 	"google.golang.org/grpc"
 )

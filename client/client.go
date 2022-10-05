@@ -7,7 +7,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	"github.com/Grumlebob/GoLangAssignment2HardgRPC/protos"
+	"github.com/Grumlebob/grpcPhysicalTime/protos"
 )
 
 func main() {
