@@ -30,7 +30,8 @@ func (s *Server) GetTime(ctx context.Context, clientMessage *protos.ClientReques
 
 func main() {
 	// Create listener tcp on port 9080
-	listener, err := net.Listen("udp", ":9080")
+	listener, err := net.Listen("tcp", ":9080")
+
 	if err != nil {
 		log.Fatalf("Failed to listen on port 9080: %v", err)
 	}
