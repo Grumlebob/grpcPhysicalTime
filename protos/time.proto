@@ -15,5 +15,6 @@ message ClientRequest {
 }
 
 message ServerResponse {
-    google.protobuf.Timestamp timestamp = 1;
+    google.protobuf.Timestamp timestampRecieved = 1;
+    google.protobuf.Timestamp timestampSent = 2;
 }

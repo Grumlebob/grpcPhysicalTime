@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"time"
@@ -33,12 +34,16 @@ func main() {
 func timeSync(c protos.ChatServiceClient) {
 	t := time.Now()
 	time1 := timestamppb.New(t)
-	fmt.Println(time1)
-
+	fmt.Println("T1:", time1)
 	clientRequest := protos.ClientRequest{
 		Timestamp: time1,
 	}
-	time4 := clientRequest.Timestamp
-	fmt.Println(time4)
+	response, err := c.GetTime(context.Background(), &clientRequest)
+	if err != nil {
+		log.Fatalf("Error when calling GetHeader(Message): %s", err)
+	}
+
+	time4 := response.Timestamp
+	fmt.Println("T4:", time4)
 
 }

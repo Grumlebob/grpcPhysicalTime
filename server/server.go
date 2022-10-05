@@ -20,13 +20,13 @@ type Server struct {
 func (s *Server) GetTime(ctx context.Context, clientMessage *protos.ClientRequest) (*protos.ServerResponse, error) {
 	t := time.Now()
 	time2 := timestamppb.New(t)
-	fmt.Println(time2)
+	fmt.Println("T2:", time2)
 	var response = &protos.ServerResponse{
 		Timestamp: time2,
 	}
 	t3 := time.Now()
 	time3 := timestamppb.New(t3)
-	fmt.Println(time3)
+	fmt.Println("T3:", time3)
 	return response, nil
 }
 
