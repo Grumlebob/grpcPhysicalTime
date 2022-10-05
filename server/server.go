@@ -53,7 +53,7 @@ func main() {
 			log.Fatalf("Failed to listen on port 9080: %v", err)
 		}
 	*/
-	grpcServer := grpc.NewServer()
+	grpcServer := grpc.NewServer(conn)
 	protos.RegisterChatServiceServer(grpcServer, &Server{})
 
 	/*
