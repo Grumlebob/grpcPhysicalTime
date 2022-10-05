@@ -49,12 +49,13 @@ func timeSync(c protos.ChatServiceClient) {
 	var timeServer = response.TimestampSent.AsTime().Sub(response.TimestampRecieved.AsTime())
 	var roundTrip = timeClient - timeServer
 	//Client sets time to T3 + roundtrip/2
+	fmt.Println("bug spotting:", response.TimestampSent.AsTime())
 	var clientSyncTime = response.TimestampSent.AsTime().Add(roundTrip / 2)
 
 	//Prints
 	fmt.Println("T4 - T1:", time4.AsTime().Sub(time1.AsTime()))
 	fmt.Println("T3 - T2:", response.TimestampSent.AsTime().Sub(response.TimestampRecieved.AsTime()))
 	fmt.Println("Roundtrip:", roundTrip)
-	fmt.Println("Client time:", clientSyncTime)
+	fmt.Println("Client synced time:", clientSyncTime)
 	fmt.Println("Client before correction:", time.Now())
 }

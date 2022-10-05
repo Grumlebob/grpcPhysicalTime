@@ -18,9 +18,8 @@ type Server struct {
 }
 
 func (s *Server) GetTime(ctx context.Context, clientMessage *protos.ClientRequest) (*protos.ServerResponse, error) {
-	t := time.Now()
-	time2 := timestamppb.New(t)
-	fmt.Println("T2:", time2)
+	time2 := timestamppb.New(time.Now())
+	fmt.Println("T2:", time2.AsTime())
 	fmt.Println("Server current time:", time.Now())
 	var response = &protos.ServerResponse{
 		TimestampRecieved: time2,
