@@ -17,7 +17,8 @@ func main() {
 	// Creat a virtual RPC Client Connection on port  9080 WithInsecure (because  of http)
 	var conn *grpc.ClientConn
 
-	conn, err := grpc.Dial(":9080", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("172.30.48.1:123", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	//conn, err := grpc.Dial(":9080", grpc.WithTransportCredentials(insecure.NewCredentials()))   //TCP VIRKER
 	if err != nil {
 		log.Fatalf("Could not connect: %s", err)
 	}

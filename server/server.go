@@ -33,15 +33,32 @@ func (s *Server) GetTime(ctx context.Context, clientMessage *protos.ClientReques
 
 func main() {
 	// Create listener tcp on port 9080
-	listener, err := net.Listen("tcp", ":9080")
 
+	radr, err := net.ResolveUDPAddr("udp", net.JoinHostPort("172.30.48.1", "123"))
+	var ladr *net.UDPAddr
 	if err != nil {
-		log.Fatalf("Failed to listen on port 9080: %v", err)
+		log.Fatalf("Failed udp step 1: %v", err)
 	}
+
+	conn, err2 := net.DialUDP("udp", ladr, radr)
+	if err2 != nil {
+		log.Fatalf("Failed upd step 2: %v", err)
+	}
+	defer conn.Close()
+
+	/*
+		listener, err := net.Listen("tcp", ":9080")
+
+		if err != nil {
+			log.Fatalf("Failed to listen on port 9080: %v", err)
+		}
+	*/
 	grpcServer := grpc.NewServer()
 	protos.RegisterChatServiceServer(grpcServer, &Server{})
 
-	if err := grpcServer.Serve(listener); err != nil {
-		log.Fatalf("failed to server %v", err)
-	}
+	/*
+		if err := grpcServer.Serve(listener); err != nil {
+			log.Fatalf("failed to server %v", err)
+		}
+	*/
 }
