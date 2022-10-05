@@ -14,17 +14,18 @@ import (
 )
 
 func main() {
-	// Creat a virtual RPC Client Connection on port  9080 WithInsecure (because  of http)
+	// Create a virtual RPC Client Connection on port  9080 WithInsecure (because  of http)
 	var conn *grpc.ClientConn
-
+	context, cancelFunction := context.WithTimeout(context.Background(), time.Second*2) //standard er 5
+	defer cancelFunction()
 	// IPv4:port = "172.30.48.1:9080"
-	conn, err := grpc.Dial("172.30.48.1:9080", grpc.WithTransportCredentials(insecure.NewCredentials())) //TCP VIRKER
+	conn, err := grpc.DialContext(context, "172.30.48.1:9080", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("Could not connect: %s", err)
 	}
+	defer conn.Close()
 
 	// Defer means: When this function returns, call this method (meaing, one main is done, close connection)
-	defer conn.Close()
 
 	//  Create new Client from generated gRPC code from proto
 	c := protos.NewChatServiceClient(conn)
