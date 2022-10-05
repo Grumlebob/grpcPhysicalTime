@@ -18,7 +18,7 @@ type Server struct {
 }
 
 func (s *Server) GetTime(ctx context.Context, clientMessage *protos.ClientRequest) (*protos.ServerResponse, error) {
-	time2 := timestamppb.New(time.Now().Local())
+	time2 := timestamppb.New(time.Now().Local().UTC())
 	fmt.Println("T2:", time2.AsTime())
 	fmt.Println("Server current time:", time.Now())
 	var response = &protos.ServerResponse{
