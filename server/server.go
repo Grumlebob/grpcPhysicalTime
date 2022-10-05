@@ -22,11 +22,9 @@ func (s *Server) GetTime(ctx context.Context, clientMessage *protos.ClientReques
 	time2 := timestamppb.New(t)
 	fmt.Println("T2:", time2)
 	var response = &protos.ServerResponse{
-		Timestamp: time2,
+		TimestampRecieved: time2,
+		TimestampSent:     timestamppb.New(time.Now()),
 	}
-	t3 := time.Now()
-	time3 := timestamppb.New(t3)
-	fmt.Println("T3:", time3)
 	return response, nil
 }
 
