@@ -43,6 +43,18 @@ func timeSync(c protos.ChatServiceClient) {
 		log.Fatalf("Error when calling GetHeader(Message): %s", err)
 	}
 	time4 := timestamppb.New(t)
-	fmt.Println("T2:", response.TimestampRecieved, "\n T3:", response.TimestampSent, "\n T4:", time4)
+	fmt.Println("T2:", response.TimestampRecieved, "\nT3:", response.TimestampSent, "\nT4:", time4)
+
+	// Calculate the time difference
+	var timeClient = time4.AsTime().Sub(time1.AsTime())
+	var timeServer = response.TimestampSent.AsTime().Sub(response.TimestampRecieved.AsTime())
+	var roundTrip = timeClient - timeServer
+	//Client sets time to T3 + roundtrip/2
+	var clientSyncTime = response.TimestampSent.AsTime().Add(roundTrip / 2)
+
+	fmt.Println("T4 - T1:", time4.AsTime().Sub(time1.AsTime()))
+	fmt.Println("T3 - T2:", response.TimestampSent.AsTime().Sub(response.TimestampRecieved.AsTime()))
+	fmt.Println("Roundtrip:", roundTrip)
+	fmt.Println("Client time:", clientSyncTime)
 
 }
